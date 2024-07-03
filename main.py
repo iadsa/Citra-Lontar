@@ -4,7 +4,7 @@ from processing import *
 from layout import *
 import PySimpleGUI as sg
 
-filename_out = "out.png"
+filename_out = "output_sample.png"
 
 mode_to_coldepth = {
     "1": 1,
@@ -50,7 +50,7 @@ while True:
             f
             for f in file_list
             if os.path.isfile(os.path.join(folder, f))
-            and f.lower().endswith((".png", ".gif", ".jpg", ".jpeg"))
+            and f.lower().endswith((".png"))
         ]
         window["ImgList"].update(fnames)
 
@@ -78,7 +78,7 @@ while True:
             filename = os.path.join(values["ImgFolder"], values["ImgList"][0])
             img_input = Image.open(filename)
 
-            # Ensure coldepth is obtained before processing
+           
             coldepth = mode_to_coldepth.get(img_input.mode, "Unknown")
             if coldepth == "Unknown":
                 raise ValueError("Unsupported image mode")
@@ -92,5 +92,8 @@ while True:
         except Exception as e:
             print(f"Error: {e}")
             pass
+    
+    elif event == "Reset":
+        animate_reset(window)
 
 window.close()
